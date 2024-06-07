@@ -2,7 +2,9 @@ package com.alfacode.springbootjwt.config;
 
 import java.io.IOException;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
@@ -46,6 +49,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+            } else {
+                // invalid JWT handler
+                log.warn("invalid JWT");
+                response.sendError(HttpStatus.UNAUTHORIZED.value(), "invalid JTW");
+                return;
             }
         }
         filterChain.doFilter(request, response);

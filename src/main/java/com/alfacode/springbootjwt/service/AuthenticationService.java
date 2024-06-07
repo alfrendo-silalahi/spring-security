@@ -1,5 +1,7 @@
 package com.alfacode.springbootjwt.service;
 
+import com.alfacode.springbootjwt.exception.ResourceNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationService {
 
     private final UserRepository userRepository;
@@ -41,11 +44,13 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponseDTO login(LoginRequestDTO loginRequestDTO) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
         User user = userRepository.findByEmail(loginRequestDTO.getEmail())
-                .orElseThrow(
-                        () -> new RuntimeException("User with email " + loginRequestDTO.getEmail() + " not found!"));
+                .orElseThrow(() -> {
+                    ResourceNotFoundException exception = new ResourceNotFoundException("user", "email", loginRequestDTO.getEmail());
+                    log.warn(exception.getMessage());
+                    return exception;
+                });
         String token = jwtService.generateToken(user);
         return AuthenticationResponseDTO.builder().token(token).build();
     }

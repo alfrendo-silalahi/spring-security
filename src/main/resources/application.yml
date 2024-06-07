@@ -16,5 +16,9 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+logging:
+  level:
+    root: DEBUG
+
 jwt:
-  secret-key:
+  secret-key: bdf2d6b34a06ab6a7beb5fd89039a01a962e946d6b38aaafab3299f8187951d8
