@@ -2,9 +2,9 @@ spring:
   application:
     name: spring-boot-jwt
   datasource:
-    url: jdbc:postgresql://localhost:5432/spring_boot_jwt
-    username: postgres
-    password: postgres
+    url:
+    username:
+    password:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -18,7 +18,7 @@ spring:
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
 
 jwt:
-  secret-key: bdf2d6b34a06ab6a7beb5fd89039a01a962e946d6b38aaafab3299f8187951d8
+  secret-key:
