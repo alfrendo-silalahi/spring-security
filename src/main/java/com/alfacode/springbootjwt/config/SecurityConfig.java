@@ -1,6 +1,7 @@
 package com.alfacode.springbootjwt.config;
 
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -11,8 +12,6 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import lombok.RequiredArgsConstructor;
 
 import java.io.OutputStream;
 
@@ -29,14 +28,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(CsrfConfigurer::disable)
-                .authorizeHttpRequests(request -> {
-                    request
-                            .requestMatchers("/api/v1/auth/**").permitAll()
-                            .anyRequest().authenticated();
-                })
-                .sessionManagement(session -> {
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                })
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .anyRequest().authenticated())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(basic -> basic.authenticationEntryPoint(
@@ -44,7 +39,7 @@ public class SecurityConfig {
                             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             OutputStream responseStream = response.getOutputStream();
-                            responseStream.write("{\"error\": \"invalid email or password\"}".getBytes());
+                            responseStream.write("{\"failed\": \"unauthorized\"}".getBytes());
                             responseStream.flush();
                         })
                 )

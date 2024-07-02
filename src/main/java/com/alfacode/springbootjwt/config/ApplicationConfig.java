@@ -23,7 +23,7 @@ public class ApplicationConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
-                .orElseThrow(() -> new RuntimeException("User with email " + username + " not found!"));
+                .orElseThrow(() -> new RuntimeException(String.format("user not found :: %s", username)));
     }
 
     @Bean
@@ -34,7 +34,8 @@ public class ApplicationConfig {
     @Bean
     public AuthenticationProvider authenticationProvider(
             UserDetailsService userDetailsService,
-            PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder
+    ) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
