@@ -1,10 +1,10 @@
-package com.alfacode.springbootjwt;
+package dev.alfrendosilalahi.spring.security;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootJwtApplicationTests {
+class SpringBootSpringSecurityJWTApplicationTests {
 
 	@Test
 	void contextLoads() {

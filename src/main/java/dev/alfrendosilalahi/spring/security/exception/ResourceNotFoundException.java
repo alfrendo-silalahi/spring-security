@@ -1,4 +1,4 @@
-package com.alfacode.springbootjwt.exception;
+package dev.alfrendosilalahi.spring.security.exception;
 
 import lombok.Getter;
 

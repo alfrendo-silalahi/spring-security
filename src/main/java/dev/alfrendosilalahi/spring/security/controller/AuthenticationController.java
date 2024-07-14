@@ -1,9 +1,9 @@
-package com.alfacode.springbootjwt.controller;
+package dev.alfrendosilalahi.spring.security.controller;
 
-import com.alfacode.springbootjwt.dto.AuthenticationResponseDTO;
-import com.alfacode.springbootjwt.dto.LoginRequestDTO;
-import com.alfacode.springbootjwt.dto.RegisterRequestDTO;
-import com.alfacode.springbootjwt.service.AuthenticationService;
+import dev.alfrendosilalahi.spring.security.dto.AuthenticationResponseDTO;
+import dev.alfrendosilalahi.spring.security.dto.LoginRequestDTO;
+import dev.alfrendosilalahi.spring.security.dto.RegisterRequestDTO;
+import dev.alfrendosilalahi.spring.security.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

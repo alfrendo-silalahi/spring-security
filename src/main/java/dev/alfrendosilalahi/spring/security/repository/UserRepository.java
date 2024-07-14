@@ -1,10 +1,9 @@
-package com.alfacode.springbootjwt.repository;
+package dev.alfrendosilalahi.spring.security.repository;
 
 import java.util.Optional;
 
+import dev.alfrendosilalahi.spring.security.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.alfacode.springbootjwt.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 

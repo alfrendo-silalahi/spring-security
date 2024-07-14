@@ -1,4 +1,4 @@
-package com.alfacode.springbootjwt.dto;
+package dev.alfrendosilalahi.spring.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

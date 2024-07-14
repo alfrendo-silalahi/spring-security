@@ -1,6 +1,6 @@
-package com.alfacode.springbootjwt.service;
+package dev.alfrendosilalahi.spring.security.service;
 
-import com.alfacode.springbootjwt.exception.ResourceNotFoundException;
+import dev.alfrendosilalahi.spring.security.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,12 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alfacode.springbootjwt.config.JwtService;
-import com.alfacode.springbootjwt.dto.AuthenticationResponseDTO;
-import com.alfacode.springbootjwt.dto.LoginRequestDTO;
-import com.alfacode.springbootjwt.dto.RegisterRequestDTO;
-import com.alfacode.springbootjwt.entity.User;
-import com.alfacode.springbootjwt.repository.UserRepository;
+import dev.alfrendosilalahi.spring.security.config.JwtService;
+import dev.alfrendosilalahi.spring.security.dto.AuthenticationResponseDTO;
+import dev.alfrendosilalahi.spring.security.dto.LoginRequestDTO;
+import dev.alfrendosilalahi.spring.security.dto.RegisterRequestDTO;
+import dev.alfrendosilalahi.spring.security.entity.User;
+import dev.alfrendosilalahi.spring.security.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.alfacode.springbootjwt.config;
+package dev.alfrendosilalahi.spring.security.config;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.alfacode.springbootjwt.entity;
+package dev.alfrendosilalahi.spring.security.entity;
 
 import java.util.Collection;
 import java.util.List;
