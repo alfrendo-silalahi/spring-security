@@ -18,7 +18,7 @@ import java.io.OutputStream;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class    SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 
@@ -29,20 +29,11 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(CsrfConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .httpBasic(basic -> basic.authenticationEntryPoint(
-                        (request, response, authException) -> {
-                            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            OutputStream responseStream = response.getOutputStream();
-                            responseStream.write("{\"failed\": \"unauthorized\"}".getBytes());
-                            responseStream.flush();
-                        })
-                )
                 .build();
     }
 

@@ -3,6 +3,8 @@ package dev.alfrendosilalahi.spring.security.controller;
 import dev.alfrendosilalahi.spring.security.dto.AuthenticationResponseDTO;
 import dev.alfrendosilalahi.spring.security.dto.LoginRequestDTO;
 import dev.alfrendosilalahi.spring.security.dto.RegisterRequestDTO;
+import dev.alfrendosilalahi.spring.security.dto.request.InitForgetPasswordRequestDTO;
+import dev.alfrendosilalahi.spring.security.dto.response.InitForgetPasswordResponseDTO;
 import dev.alfrendosilalahi.spring.security.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,14 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponseDTO> register(
             @RequestBody LoginRequestDTO loginRequestDTO) {
         return ResponseEntity.ok(authenticationService.login(loginRequestDTO));
+    }
+
+    @PostMapping("/forget-password")
+    public ResponseEntity<InitForgetPasswordResponseDTO> initForgetPassword(
+            @RequestBody InitForgetPasswordRequestDTO requestDTO
+    ) {
+        InitForgetPasswordResponseDTO responseDTO = authenticationService.initForgetPassword(requestDTO);
+        return ResponseEntity.ok(responseDTO);
     }
 
 }

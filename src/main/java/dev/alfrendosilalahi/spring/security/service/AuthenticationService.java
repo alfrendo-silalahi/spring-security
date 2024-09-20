@@ -1,5 +1,7 @@
 package dev.alfrendosilalahi.spring.security.service;
 
+import dev.alfrendosilalahi.spring.security.dto.request.InitForgetPasswordRequestDTO;
+import dev.alfrendosilalahi.spring.security.dto.response.InitForgetPasswordResponseDTO;
 import dev.alfrendosilalahi.spring.security.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +19,8 @@ import dev.alfrendosilalahi.spring.security.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -29,6 +33,8 @@ public class AuthenticationService {
     private final JwtService jwtService;
 
     private final AuthenticationManager authenticationManager;
+
+    private final RedisService redisService;
 
     @Transactional
     public AuthenticationResponseDTO register(RegisterRequestDTO registerRequestDTO) {
@@ -45,14 +51,26 @@ public class AuthenticationService {
 
     public AuthenticationResponseDTO login(LoginRequestDTO loginRequestDTO) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword()));
-        User user = userRepository.findByEmail(loginRequestDTO.getEmail())
-                .orElseThrow(() -> {
-                    ResourceNotFoundException exception = new ResourceNotFoundException("user", "email", loginRequestDTO.getEmail());
-                    log.warn(exception.getMessage());
-                    return exception;
-                });
+        User user = findUserByEmail(loginRequestDTO.getEmail());
         String token = jwtService.generateToken(user);
         return AuthenticationResponseDTO.builder().token(token).build();
+    }
+
+    @Transactional
+    public InitForgetPasswordResponseDTO initForgetPassword(InitForgetPasswordRequestDTO requestDTO) {
+        User user = findUserByEmail(requestDTO.email());
+        String key = "INIT_FORGET_PASSWORD:" + UUID.randomUUID();
+        redisService.putValue(key, user);
+        return null;
+    }
+
+    private User findUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> {
+                    ResourceNotFoundException exception = new ResourceNotFoundException("user", "email", email);
+                    log.error(exception.getMessage());
+                    return exception;
+                });
     }
 
 }
