@@ -1,4 +1,4 @@
-package dev.alfrendosilalahi.spring.security.config;
+package dev.alfrendosilalahi.spring.security.service;
 
 import java.util.Date;
 import java.util.HashMap;

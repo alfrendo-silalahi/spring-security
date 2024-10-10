@@ -2,6 +2,7 @@ package dev.alfrendosilalahi.spring.security.service;
 
 import dev.alfrendosilalahi.spring.security.dto.request.InitForgetPasswordRequestDTO;
 import dev.alfrendosilalahi.spring.security.dto.response.InitForgetPasswordResponseDTO;
+import dev.alfrendosilalahi.spring.security.entity.Role;
 import dev.alfrendosilalahi.spring.security.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import dev.alfrendosilalahi.spring.security.config.JwtService;
 import dev.alfrendosilalahi.spring.security.dto.AuthenticationResponseDTO;
 import dev.alfrendosilalahi.spring.security.dto.LoginRequestDTO;
 import dev.alfrendosilalahi.spring.security.dto.RegisterRequestDTO;
@@ -43,6 +43,7 @@ public class AuthenticationService {
                 .lastName(registerRequestDTO.getLastName())
                 .email(registerRequestDTO.getEmail())
                 .password(passwordEncoder.encode(registerRequestDTO.getPassword()))
+                .role(Role.USER)
                 .build();
         User newUser = userRepository.save(user);
         String token = jwtService.generateToken(newUser);
