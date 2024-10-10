@@ -1,6 +1,6 @@
 spring:
   application:
-    name: spring-boot-jwt
+    name: jwt
   datasource:
     url:
     username:
