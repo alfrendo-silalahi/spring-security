@@ -20,5 +20,10 @@ logging:
   level:
     root: INFO
 
-jwt:
-  secret-key:
+application:
+  security:
+    jwt:
+      secret-key:
+      expiration:
+      refresh:
+        expiration:

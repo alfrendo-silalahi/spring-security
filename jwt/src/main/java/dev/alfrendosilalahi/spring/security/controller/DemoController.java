@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/demo")
+@RequestMapping("/api/protected-resources")
 public class DemoController {
 
+
     @GetMapping
-    public String demo() {
-        return "Protected resource";
+    public String getProtectedResources() {
+        return "Protected resources";
     }
 
 }

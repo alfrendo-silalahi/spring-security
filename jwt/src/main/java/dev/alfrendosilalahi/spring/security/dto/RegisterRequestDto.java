@@ -1,5 +1,6 @@
 package dev.alfrendosilalahi.spring.security.dto;
 
+import dev.alfrendosilalahi.spring.security.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RegisterRequestDTO {
+public class RegisterRequestDto {
 
     private String firstName;
 
@@ -18,5 +19,7 @@ public class RegisterRequestDTO {
     private String email;
 
     private String password;
+
+    private Role role;
 
 }
