@@ -20,7 +20,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.time.LocalDateTime;
@@ -54,15 +53,6 @@ public class SecurityConfig {
                         .requestMatchers(POST, "/api/managements/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGEMENT_CREATE.name())
                         .requestMatchers(PUT, "/api/managements/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGEMENT_UPDATE.name())
                         .requestMatchers(DELETE, "/api/managements/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGEMENT_DELETE.name())
-
-                        /*
-                        .requestMatchers("/api/admin/**").hasRole(ADMIN.name())
-                        .requestMatchers(GET, "/api/admin/**").hasAnyAuthority(ADMIN_READ.name())
-                        .requestMatchers(POST, "/api/admin/**").hasAnyAuthority(ADMIN_CREATE.name())
-                        .requestMatchers(PUT, "/api/admin/**").hasAnyAuthority(ADMIN_UPDATE.name())
-                        .requestMatchers(DELETE, "/api/admin/**").hasAnyAuthority(ADMIN_DELETE.name())
-                        */
-
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

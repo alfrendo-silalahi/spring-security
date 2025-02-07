@@ -43,16 +43,16 @@ public class AuthenticationService {
 
     @Transactional
     public AuthenticationResponseDTO register(RegisterRequestDto registerRequestDto) {
-        var user = User.builder()
+        User user = User.builder()
                 .firstName(registerRequestDto.getFirstName())
                 .lastName(registerRequestDto.getLastName())
                 .email(registerRequestDto.getEmail())
                 .password(passwordEncoder.encode(registerRequestDto.getPassword()))
                 .role(registerRequestDto.getRole())
                 .build();
-        var newUser = userRepository.save(user);
-        var token = jwtService.generateToken(newUser);
-        var refreshToken = jwtService.generateRefreshToken(newUser);
+        User newUser = userRepository.save(user);
+        String token = jwtService.generateToken(newUser);
+        String refreshToken = jwtService.generateRefreshToken(newUser);
         return AuthenticationResponseDTO.builder()
                 .accessToken(token)
                 .refreshToken(refreshToken)
@@ -61,9 +61,9 @@ public class AuthenticationService {
 
     public AuthenticationResponseDTO login(LoginRequestDTO loginRequestDto) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword()));
-        var user = findUserByEmail(loginRequestDto.getEmail());
-        var token = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+        User user = findUserByEmail(loginRequestDto.getEmail());
+        String token = jwtService.generateToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
         return AuthenticationResponseDTO.builder()
                 .accessToken(token)
                 .refreshToken(refreshToken)
@@ -72,8 +72,8 @@ public class AuthenticationService {
 
     @Transactional
     public InitForgetPasswordResponseDTO initForgetPassword(InitForgetPasswordRequestDTO requestDTO) {
-        var user = findUserByEmail(requestDTO.email());
-        var key = "INIT_FORGET_PASSWORD:" + UUID.randomUUID();
+        User user = findUserByEmail(requestDTO.email());
+        String key = String.format("INIT_FORGET_PASSWORD:%s", UUID.randomUUID());
         redisService.putValue(key, user);
         return null;
     }
@@ -88,17 +88,17 @@ public class AuthenticationService {
     }
 
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        var authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return;
         }
-        var refreshToken = authHeader.substring(7);
-        var userEmail = jwtService.extractUsername(refreshToken);
+        String refreshToken = authHeader.substring(7);
+        String userEmail = jwtService.extractUsername(refreshToken);
         if (userEmail != null) {
             var user = userRepository.findByEmail(userEmail).orElseThrow();
             if (jwtService.isTokenValid(refreshToken, user)) {
-                var accessToken = jwtService.generateToken(user);
-                var authResponse = AuthenticationResponseDTO.builder()
+                String accessToken = jwtService.generateToken(user);
+                AuthenticationResponseDTO authResponse = AuthenticationResponseDTO.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
                         .build();

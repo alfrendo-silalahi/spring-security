@@ -27,13 +27,13 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponseDTO> register(@RequestBody RegisterRequestDto registerRequestDto) {
-        var response = authenticationService.register(registerRequestDto);
+        AuthenticationResponseDTO response = authenticationService.register(registerRequestDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponseDTO> register(@RequestBody LoginRequestDTO loginRequestDTO) {
-        var response = authenticationService.login(loginRequestDTO);
+        AuthenticationResponseDTO response = authenticationService.login(loginRequestDTO);
         return ResponseEntity.ok(response);
     }
 
@@ -44,7 +44,7 @@ public class AuthenticationController {
 
     @PostMapping("/forget-password")
     public ResponseEntity<InitForgetPasswordResponseDTO> initForgetPassword(@RequestBody InitForgetPasswordRequestDTO requestDTO) {
-        var response = authenticationService.initForgetPassword(requestDTO);
+        InitForgetPasswordResponseDTO response = authenticationService.initForgetPassword(requestDTO);
         return ResponseEntity.ok(response);
     }
 
