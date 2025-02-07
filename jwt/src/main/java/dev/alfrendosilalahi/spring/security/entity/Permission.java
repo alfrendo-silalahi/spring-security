@@ -17,7 +17,6 @@ public enum Permission {
     MANAGEMENT_CREATE("management:create"),
     MANAGEMENT_DELETE("management:delete");
 
-
     private final String permission;
 
 }

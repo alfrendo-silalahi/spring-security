@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/protected-resources")
 public class DemoController {
 
-
     @GetMapping
     public String getProtectedResources() {
         return "Protected resources";

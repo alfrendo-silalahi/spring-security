@@ -2,9 +2,9 @@ spring:
   application:
     name: jwt
   datasource:
-    url:
-    username:
-    password:
+    url: jdbc:postgresql://localhost:5432/spring_security_jwt
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -23,7 +23,7 @@ logging:
 application:
   security:
     jwt:
-      secret-key:
-      expiration:
+      secret-key: "CkNv5iyslM4JUVKDwiPdur2D7WO4U96D34gOQFnN4oosglsbgsabg834752024702jo402y4bldblbgl0750295"
+      expiration: 86400000
       refresh:
-        expiration:
+        expiration: 86400000
